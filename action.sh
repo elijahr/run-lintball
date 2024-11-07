@@ -49,12 +49,12 @@ else
       echo >&2
       echo "Please set the default branch manually." >&2
       echo "For instance, if your default branch is master:" >&2
-      echo "  uses: elijahr/lintball@v${lintball_major_version}" >&2
+      echo "  uses: elijahr/lintball@v2" >&2
       echo "  with:" >&2
       echo "    default-branch: master" >&2
       echo >&2
       echo "Or, provide the GITHUB_TOKEN environment variable:" >&2
-      echo "  uses: elijahr/lintball@v${lintball_major_version}" >&2
+      echo "  uses: elijahr/lintball@v2" >&2
       echo "  with:" >&2
       echo "    env:" >&2
       # shellcheck disable=SC2016
