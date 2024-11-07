@@ -6,12 +6,12 @@
 
 set -euxo pipefail
 
-IFS= read -r check_all_files < <(printenv 'INPUT_CHECK_ALL_FILES')
-IFS= read -r committish < <(printenv 'INPUT_COMMITTISH')
-IFS= read -r default_branch < <(printenv 'INPUT_DEFAULT_BRANCH')
-IFS= read -r workspace < <(printenv 'INPUT_WORKSPACE')
-IFS= read -r lintball_version < <(printenv 'INPUT_VERSION')
-IFS= read -r github_action_path < <(printenv 'GITHUB_ACTION_PATH')
+check_all_files="${INPUT_CHECK_ALL_FILES:-}"
+committish="${INPUT_COMMITTISH:-}"
+default_branch="${INPUT_DEFAULT_BRANCH:-}"
+workspace="${INPUT_WORKSPACE:-}"
+lintball_version="${INPUT_VERSION:-}"
+github_action_path="${GITHUB_ACTION_PATH:-}"
 
 if [[ -z ${workspace} ]]; then
   workspace="${GITHUB_WORKSPACE}"
