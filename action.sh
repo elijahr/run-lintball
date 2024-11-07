@@ -4,7 +4,7 @@
 # It is used internally by the elijahr/lintball action and runs lintball
 # in a Docker container.
 
-set -eu
+set -euxo pipefail
 
 IFS= read -r check_all_files < <(printenv 'INPUT_CHECK_ALL_FILES')
 IFS= read -r committish < <(printenv 'INPUT_COMMITTISH')
