@@ -1,6 +1,6 @@
 # yamllint disable rule:line-length
-name: "Run lintball"
-description: "Keep your entire project tidy with one github action"
+name: "Run lintball in Docker"
+description: "Keep your entire project tidy with a GitHub Action"
 branding:
   icon: "align-left"
   color: "green"
