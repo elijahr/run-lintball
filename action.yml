@@ -25,6 +25,10 @@ inputs:
     description: "The version of lintball to use. If not provided, will default to a hardcoded version corresponding to the run-lintball action version."
     required: true
     default: ""
+  github-token:
+    description: "The GitHub token to use for fetching repository information. If not provided, will default to an empty string."
+    required: true
+    default: ""
 runs:
   using: "composite"
   steps:
@@ -45,6 +49,7 @@ runs:
         INPUT_CHECK_ALL_FILES: ${{ inputs.check-all-files }}
         INPUT_COMMITTISH: ${{ inputs.committish }}
         INPUT_DEFAULT_BRANCH: ${{ inputs.default-branch }}
+        INPUT_GITHUB_TOKEN: ${{ inputs.github-token }}
         INPUT_WORKSPACE: ${{ inputs.workspace }}
         INPUT_VERSION: ${{ inputs.version }}
         GITHUB_ACTION_PATH: ${{ github.action_path }}

@@ -9,6 +9,7 @@ set -euxo pipefail
 check_all_files="${INPUT_CHECK_ALL_FILES:-}"
 committish="${INPUT_COMMITTISH:-}"
 default_branch="${INPUT_DEFAULT_BRANCH:-}"
+github_token="${INPUT_GITHUB_TOKEN:-${GITHUB_TOKEN:-}}"
 workspace="${INPUT_WORKSPACE:-}"
 lintball_version="${INPUT_VERSION:-}"
 github_action_path="${GITHUB_ACTION_PATH:-}"
@@ -34,11 +35,11 @@ else
   if [[ ${committish} == "<auto>" ]]; then
     # Use the GitHub API to get the default branch if it's not specified.
     # If this gets rate-limited, you can set the default branch manually or
-    # provide the GITHUB_TOKEN environment variable.
+    # provide the github-token input parameter.
     if [[ ${default_branch} == "<auto>" ]]; then
       declare headers=()
-      if [[ -n ${GITHUB_TOKEN:-} ]]; then
-        headers+=(-H "Authorization: token ${GITHUB_TOKEN}")
+      if [[ -n ${github_token:-} ]]; then
+        headers+=(-H "Authorization: token ${github_token}")
       fi
       default_branch=$(curl -sSL "${headers[@]}" "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}" | grep default_branch | sed 's/^.*"default_branch": "\([^"]\{1,\}\)".*$/\1/' || true)
     fi
@@ -53,12 +54,11 @@ else
       echo "  with:" >&2
       echo "    default-branch: master" >&2
       echo >&2
-      echo "Or, provide the GITHUB_TOKEN environment variable:" >&2
+      echo "Or, provide the github-token input parameter:" >&2
       echo "  uses: elijahr/lintball@v2" >&2
       echo "  with:" >&2
-      echo "    env:" >&2
       # shellcheck disable=SC2016
-      echo '      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}' >&2
+      echo '    github-token: ${{ secrets.GITHUB_TOKEN }}' >&2
       echo >&2
       exit 1
     fi
