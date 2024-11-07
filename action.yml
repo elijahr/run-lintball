@@ -46,5 +46,5 @@ runs:
         INPUT_COMMITTISH: ${{ inputs.committish }}
         INPUT_DEFAULT_BRANCH: ${{ inputs.default-branch }}
         INPUT_WORKSPACE: ${{ inputs.workspace }}
-        INPUT_REBUILD: ${{ inputs.rebuild }}
+        INPUT_VERSION: ${{ inputs.version }}
         GITHUB_ACTION_PATH: ${{ github.action_path }}
