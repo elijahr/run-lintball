@@ -40,9 +40,7 @@ else
       if [[ -n ${GITHUB_TOKEN:-} ]]; then
         headers+=(-H "Authorization: token ${GITHUB_TOKEN}")
       fi
-      default_branch=$(curl -sSL "${headers[@]}" "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}" |
-        grep default_branch |
-        sed 's/^.*"default_branch": "\([^"]\{1,\}\)".*$/\1/')
+      default_branch=$(curl -sSL "${headers[@]}" "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}" | grep default_branch | sed 's/^.*"default_branch": "\([^"]\{1,\}\)".*$/\1/' || true)
     fi
 
     if [[ -z ${default_branch} ]]; then
@@ -73,14 +71,14 @@ else
       # A pull request.
       # Check files which have changed between the merge base and the
       # current commit.
-      git fetch --unshallow origin "${GITHUB_BASE_REF}" || git fetch --depth=1000 origin "${GITHUB_BASE_REF}"
+      git fetch --unshallow origin "${GITHUB_BASE_REF}" || git fetch --depth=1000 origin "${GITHUB_BASE_REF}" || true
       git show-ref
       IFS= read -r committish < <(git merge-base -a "refs/remotes/origin/${GITHUB_BASE_REF}" "${GITHUB_SHA}" || true)
     else
       # A push to a non-default, non-PR branch.
       # Check files which have changed between default branch and the current
       # commit.
-      git fetch --unshallow origin "${default_branch}" || git fetch --depth=1000 origin "${default_branch}"
+      git fetch --unshallow origin "${default_branch}" || git fetch --depth=1000 origin "${default_branch}" || true
       git show-ref
       IFS= read -r committish < <(git merge-base -a "refs/remotes/origin/${default_branch}" "${GITHUB_SHA}" || true)
     fi
