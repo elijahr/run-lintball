@@ -41,7 +41,7 @@ else
       if [[ -n ${github_token:-} ]]; then
         headers+=(-H "Authorization: token ${github_token}")
       fi
-      default_branch=$(curl -sSL "${headers[@]}" "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}" | grep default_branch | sed 's/^.*"default_branch": "\([^"]\{1,\}\)".*$/\1/' || true)
+      default_branch=$(curl -sSL "${headers[@]}" "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}" | grep default_branch | sed 's/^.*"default_branch": "\([^"]\{1,\}\)".*$/\1/' | head -n1 || true)
     fi
 
     if [[ -z ${default_branch} ]]; then
